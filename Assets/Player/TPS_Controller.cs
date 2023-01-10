@@ -9,11 +9,17 @@ public class TPS_Controller : MonoBehaviour
 {
     [SerializeField]  private CinemachineVirtualCamera AimingCamera;
 
+    // Sensitivity values 
+    [SerializeField] private float DefaultSensitivity;
+    [SerializeField] private float AimingSensitivity;
+
+    private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
 
     // Get starter inputs
     private void Awake()
     {
+        TPC = GetComponent<ThirdPersonController>();
         StarterInputs = GetComponent<StarterAssetsInputs>();
     }
 
@@ -30,11 +36,13 @@ public class TPS_Controller : MonoBehaviour
         if (StarterInputs.Aim) 
         {
             AimingCamera.gameObject.SetActive(true);
+            TPC.SetSensitivity(AimingSensitivity);
         }
 
         else 
         {
             AimingCamera.gameObject.SetActive(false);
+            TPC.SetSensitivity(DefaultSensitivity);
         }
     }
 }
