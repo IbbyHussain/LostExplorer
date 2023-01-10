@@ -18,6 +18,12 @@ public class TPS_Controller : MonoBehaviour
 
     [SerializeField] private Transform DebugTransform;
 
+    // Shoot 
+
+    [SerializeField] private Transform VFXHitGreen;
+    [SerializeField] private Transform VFXHitRed;
+
+
     private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
 
@@ -45,11 +51,14 @@ public class TPS_Controller : MonoBehaviour
         // Ray cast to centre of screen
         Ray RayCast = Camera.main.ScreenPointToRay(ScreenCentrePoint);
 
+        Transform HitTransform = null;
+
         // If ray cast hit object
         if (Physics.Raycast(RayCast, out RaycastHit RayCastHitPosition, 999.0f, AimColliderLayerMask))
         {
             DebugTransform.position = RayCastHitPosition.point;
             MouseWorldPosition = RayCastHitPosition.point;
+            HitTransform = RayCastHitPosition.transform;
         }
 
         // Enables and disables aiming camera when player aims
@@ -57,6 +66,7 @@ public class TPS_Controller : MonoBehaviour
         {
             AimingCamera.gameObject.SetActive(true);
             TPC.SetSensitivity(AimingSensitivity);
+            TPC.SetRotateOnMove(false);
 
             // Get rotation of where player is aiming
             Vector3 WorldAimTraget = MouseWorldPosition;
@@ -71,9 +81,29 @@ public class TPS_Controller : MonoBehaviour
         {
             AimingCamera.gameObject.SetActive(false);
             TPC.SetSensitivity(DefaultSensitivity);
+            TPC.SetRotateOnMove(true);
         }
 
+        if (StarterInputs.Shoot) 
+        {
+            if(HitTransform != null) 
+            {
+                if(HitTransform.GetComponent<BulletTarget>() != null) 
+                {
+                    // Hit target
+                    Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
+                }
 
+                else 
+                {
+                    // Hit soemthing else
+                    Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
+                }
+            }
+
+            StarterInputs.Shoot = false;
+
+        }
         
     }
 }
