@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using UnityEngine.InputSystem;
 
 
 public class TPS_Controller : MonoBehaviour
@@ -12,6 +13,10 @@ public class TPS_Controller : MonoBehaviour
     // Sensitivity values 
     [SerializeField] private float DefaultSensitivity;
     [SerializeField] private float AimingSensitivity;
+
+    [SerializeField] private LayerMask AimColliderLayerMask = new LayerMask();
+
+    [SerializeField] private Transform DebugTransform;
 
     private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
@@ -43,6 +48,19 @@ public class TPS_Controller : MonoBehaviour
         {
             AimingCamera.gameObject.SetActive(false);
             TPC.SetSensitivity(DefaultSensitivity);
+        }
+
+
+        // Get centre of screen for raycast
+        Vector2 ScreenCentrePoint = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
+
+        // Ray cast to centre of screen
+        Ray RayCast = Camera.main.ScreenPointToRay(ScreenCentrePoint);
+
+        // If ray cast hit object
+        if(Physics.Raycast(RayCast, out RaycastHit RayCastHitPosition, 999.0f, AimColliderLayerMask)) 
+        {
+            DebugTransform.position = RayCastHitPosition.point;
         }
     }
 }
