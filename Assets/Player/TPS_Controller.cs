@@ -37,11 +37,34 @@ public class TPS_Controller : MonoBehaviour
     // Update Function
     void Update()
     {
+        Vector3 MouseWorldPosition = Vector3.zero;
+
+        // Get centre of screen for raycast
+        Vector2 ScreenCentrePoint = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
+
+        // Ray cast to centre of screen
+        Ray RayCast = Camera.main.ScreenPointToRay(ScreenCentrePoint);
+
+        // If ray cast hit object
+        if (Physics.Raycast(RayCast, out RaycastHit RayCastHitPosition, 999.0f, AimColliderLayerMask))
+        {
+            DebugTransform.position = RayCastHitPosition.point;
+            MouseWorldPosition = RayCastHitPosition.point;
+        }
+
         // Enables and disables aiming camera when player aims
         if (StarterInputs.Aim) 
         {
             AimingCamera.gameObject.SetActive(true);
             TPC.SetSensitivity(AimingSensitivity);
+
+            // Get rotation of where player is aiming
+            Vector3 WorldAimTraget = MouseWorldPosition;
+            WorldAimTraget.y = transform.position.y;
+            Vector3 AimDirection = (WorldAimTraget - transform.position).normalized;
+
+            //Rotates player in aim direction (Lerp for smooth rotation)
+            transform.forward = Vector3.Lerp(transform.forward, AimDirection, Time.deltaTime * 20.0f);
         }
 
         else 
@@ -51,16 +74,6 @@ public class TPS_Controller : MonoBehaviour
         }
 
 
-        // Get centre of screen for raycast
-        Vector2 ScreenCentrePoint = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
-
-        // Ray cast to centre of screen
-        Ray RayCast = Camera.main.ScreenPointToRay(ScreenCentrePoint);
-
-        // If ray cast hit object
-        if(Physics.Raycast(RayCast, out RaycastHit RayCastHitPosition, 999.0f, AimColliderLayerMask)) 
-        {
-            DebugTransform.position = RayCastHitPosition.point;
-        }
+        
     }
 }
