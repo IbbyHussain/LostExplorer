@@ -30,16 +30,15 @@ public class TPS_Controller : MonoBehaviour
     // General
 
     [SerializeField] HPBar HPBarScript;
-    [SerializeField] STBar STBarScript;
+    [SerializeField] public STBar STBarScript;
 
-    float CurrentHealth = 100;
-    float MaxHealth = 100;
+    public float CurrentHealth = 100;
+    public float MaxHealth = 100;
 
-    float CurrentStamina = 100;
-    float MaxStamina = 100;
+    public float CurrentStamina = 100;
+    public float MaxStamina = 100;
 
     float SprintDrain = 0.01f;
-    
 
     // Get starter inputs
     private void Awake()
@@ -57,15 +56,27 @@ public class TPS_Controller : MonoBehaviour
     // Sprint Function
     void Sprint() 
     {
-        // If player presses sprint and there is enough stamina
-        if (StarterInputs.sprint && CurrentStamina >= SprintDrain) 
+        // If player presses sprint and there is enough stamina -- Doesnt actually stop player from sprinting
+        if (StarterInputs.sprint) 
         {
-            CurrentStamina -= SprintDrain;
+            // sprint if enough stamina
+            if(CurrentStamina >= SprintDrain) 
+            {
+                StarterInputs.sprint = true;
 
-            STBarScript.SetCurrentStamina(CurrentStamina);
+                CurrentStamina -= SprintDrain;
+
+                STBarScript.SetCurrentStamina(CurrentStamina);
+            }
+
+            else 
+            {
+                StarterInputs.sprint = false;
+            }
         }
     }
 
+    // Damage
     void TakeDamage(float Amount) 
     {
         if(CurrentHealth >= 0) 
@@ -82,6 +93,8 @@ public class TPS_Controller : MonoBehaviour
             }
         }
     }
+
+  
     
     // Update Function
     void Update()
