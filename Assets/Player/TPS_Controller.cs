@@ -29,13 +29,16 @@ public class TPS_Controller : MonoBehaviour
 
     // General
 
-    float CurrentHealth;
-    float MaxHealth;
+    [SerializeField] HPBar HPBarScript;
+    [SerializeField] STBar STBarScript;
 
-    float CurrentStamina;
-    float MaxStamina;
+    float CurrentHealth = 100;
+    float MaxHealth = 100;
 
-    float SprintDrain;
+    float CurrentStamina = 100;
+    float MaxStamina = 100;
+
+    float SprintDrain = 0.01f;
     
 
     // Get starter inputs
@@ -58,12 +61,34 @@ public class TPS_Controller : MonoBehaviour
         if (StarterInputs.sprint && CurrentStamina >= SprintDrain) 
         {
             CurrentStamina -= SprintDrain;
+
+            STBarScript.SetCurrentStamina(CurrentStamina);
+        }
+    }
+
+    void TakeDamage(float Amount) 
+    {
+        if(CurrentHealth >= 0) 
+        {
+            CurrentHealth -= Amount;
+
+            HPBarScript.SetCurrentHealth(CurrentHealth);
+
+            if(CurrentHealth <= 0) 
+            {
+                // Death
+
+                Debug.Log("Dead");
+            }
         }
     }
     
     // Update Function
     void Update()
     {
+
+        Sprint();
+
         Vector3 MouseWorldPosition = Vector3.zero;
 
         // Get centre of screen for raycast
