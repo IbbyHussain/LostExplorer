@@ -27,6 +27,17 @@ public class TPS_Controller : MonoBehaviour
     private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
 
+    // General
+
+    float CurrentHealth;
+    float MaxHealth;
+
+    float CurrentStamina;
+    float MaxStamina;
+
+    float SprintDrain;
+    
+
     // Get starter inputs
     private void Awake()
     {
@@ -38,6 +49,16 @@ public class TPS_Controller : MonoBehaviour
     void Start()
     {
         
+    }
+
+    // Sprint Function
+    void Sprint() 
+    {
+        // If player presses sprint and there is enough stamina
+        if (StarterInputs.sprint && CurrentStamina >= SprintDrain) 
+        {
+            CurrentStamina -= SprintDrain;
+        }
     }
     
     // Update Function
