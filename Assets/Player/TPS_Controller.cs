@@ -63,6 +63,8 @@ public class TPS_Controller : MonoBehaviour
             if(CurrentStamina >= SprintDrain) 
             {
                 StarterInputs.sprint = true;
+                StarterInputs.Aim = false; // disable aiming when sprinting
+                StarterInputs.Shoot = false; // disable shooting when sprinting
 
                 CurrentStamina -= SprintDrain;
 
@@ -72,6 +74,8 @@ public class TPS_Controller : MonoBehaviour
             else 
             {
                 StarterInputs.sprint = false;
+                StarterInputs.Aim = true;
+                StarterInputs.Shoot = true;
             }
         }
     }
