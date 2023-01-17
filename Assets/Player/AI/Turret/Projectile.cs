@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
         if(TPSController != null) 
         {
             TPSController.TakeDamage(Damage);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -17,11 +17,23 @@ public class TurretAI : MonoBehaviour
     public float FireRate;
     float NextFire; // Time between shots, keeps fire rate synchronised
 
+    // Fire sound
+    public AudioSource FireSound;
+
+    // Fire effect
+    public ParticleSystem FireEffect;
+
     void TurretFire() 
     {
         // Instantiate projectile
         GameObject ProjectileRef = Instantiate(Projectile, TurretBarrelTransform.position, TurretBarrelTransform.rotation);
         ProjectileRef.GetComponent<Rigidbody>().AddForce(TurretBarrelTransform.up * 1500f * -1f); // .up as rotation of barrel is wrong and *1 to make it sure forwards instead of backwards
+
+        // Play fire effect at barrel of turret
+        FireEffect.transform.position = TurretBarrelTransform.position;
+        FireEffect.Play();
+
+        FireSound.Play();
         Destroy(ProjectileRef, 5.0f); // destroy after 5 seconds
     }
 
@@ -50,6 +62,11 @@ public class TurretAI : MonoBehaviour
                 NextFire = Time.time + 1f / FireRate;
                 TurretFire();
             }
+        }
+
+        else 
+        {
+            FireEffect.Pause();
         }
     }
 }
