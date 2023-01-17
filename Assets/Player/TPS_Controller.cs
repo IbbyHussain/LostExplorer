@@ -29,7 +29,7 @@ public class TPS_Controller : MonoBehaviour
 
     // General
 
-    [SerializeField] HPBar HPBarScript;
+    [SerializeField] public HPBar HPBarScript;
     [SerializeField] public STBar STBarScript;
 
     public float CurrentHealth = 100;
@@ -51,6 +51,24 @@ public class TPS_Controller : MonoBehaviour
     void Start()
     {
         
+    }
+
+    // Heal Function
+
+    public void Heal(float HealAmount) 
+    {
+        if (CurrentHealth < MaxHealth) 
+        {
+            CurrentHealth += HealAmount;
+
+            HPBarScript.SetCurrentHealth(CurrentHealth);
+
+            // Check for overflow of healing
+            if(CurrentHealth > MaxHealth) 
+            {
+                CurrentHealth = MaxHealth;
+            }
+        }
     }
 
     // Sprint Function
@@ -81,12 +99,13 @@ public class TPS_Controller : MonoBehaviour
     }
 
     // Damage
-    void TakeDamage(float Amount) 
+    public void TakeDamage(float Amount) 
     {
         if(CurrentHealth >= 0) 
         {
             CurrentHealth -= Amount;
 
+            // UI Update
             HPBarScript.SetCurrentHealth(CurrentHealth);
 
             if(CurrentHealth <= 0) 
