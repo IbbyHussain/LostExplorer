@@ -23,6 +23,8 @@ public class TPS_Controller : MonoBehaviour
     [SerializeField] private Transform VFXHitGreen;
     [SerializeField] private Transform VFXHitRed;
 
+    public AudioSource FireSound;
+    public AudioSource ReloadSound;
 
     private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
@@ -168,6 +170,9 @@ public class TPS_Controller : MonoBehaviour
 
         if (StarterInputs.Shoot) 
         {
+            // Play Fire sound
+            FireSound.Play();
+
             if(HitTransform != null) 
             {
                 if(HitTransform.GetComponent<BulletTarget>() != null) 
