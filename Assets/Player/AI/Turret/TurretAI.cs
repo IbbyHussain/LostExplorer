@@ -11,18 +11,18 @@ public class TurretAI : MonoBehaviour
 
     public GameObject Projectile;
 
-    public Transform TurretBarrelTransform;
+    public Transform TurretBarrelTransform; // Where to spawn projectile
 
     // Fire Rate
     public float FireRate;
-    float NextFire;
+    float NextFire; // Time between shots, keeps fire rate synchronised
 
     void TurretFire() 
     {
         // Instantiate projectile
         GameObject ProjectileRef = Instantiate(Projectile, TurretBarrelTransform.position, TurretBarrelTransform.rotation);
-        ProjectileRef.GetComponent<Rigidbody>().AddForce(TurretBarrelTransform.up * 1500f * -1f);
-        Destroy(ProjectileRef, 5.0f);
+        ProjectileRef.GetComponent<Rigidbody>().AddForce(TurretBarrelTransform.up * 1500f * -1f); // .up as rotation of barrel is wrong and *1 to make it sure forwards instead of backwards
+        Destroy(ProjectileRef, 5.0f); // destroy after 5 seconds
     }
 
     void Start()
@@ -33,10 +33,12 @@ public class TurretAI : MonoBehaviour
 
     void Update()
     {
+        // Calculate distance to player, as turret will only shoot player when they are in range
         Distance = Vector3.Distance(PlayerTransform.position, transform.position);
 
         if(Distance <= TurretSight) 
         {
+            // rotate to face player
             transform.LookAt(PlayerTransform);
 
             // Adjustment as mesh was rotated wrong in blender
