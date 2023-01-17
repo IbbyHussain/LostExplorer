@@ -44,6 +44,7 @@ public class TurretAI : MonoBehaviour
             // Adjustment as mesh was rotated wrong in blender
             transform.Rotate(-90, 0, 0);
 
+            // fire rate setup
             if(Time.time >= NextFire) 
             {
                 NextFire = Time.time + 1f / FireRate;
