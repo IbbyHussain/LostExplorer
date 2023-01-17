@@ -13,6 +13,13 @@ public class TurretAI : MonoBehaviour
 
     public Transform TurretBarrelTransform; // Where to spawn projectile
 
+    public float TurretHealth = 100.0f;
+
+    public AudioSource TurretDeath;
+    public ParticleSystem TurretExplosion;
+
+    public Transform TurretExplosionTransform;
+
     // Fire Rate
     public float FireRate;
     float NextFire; // Time between shots, keeps fire rate synchronised
@@ -22,6 +29,31 @@ public class TurretAI : MonoBehaviour
 
     // Fire effect
     public ParticleSystem FireEffect;
+
+    public void TurretTakeDamage(float DamageAmount) 
+    {
+        if (TurretHealth >= 0)
+        {
+            TurretHealth -= DamageAmount;
+
+            // Turret Death
+            if (TurretHealth <= 0)
+            {
+                Debug.Log("Turret Dead");
+
+                FireEffect.Stop();
+
+                // Play explosion effect
+                TurretExplosion.transform.position = TurretExplosionTransform.position;
+                TurretExplosion.Play();
+
+                // play sound
+                TurretDeath.Play();
+
+                gameObject.SetActive(false);
+            }
+        }
+    }
 
     void TurretFire() 
     {

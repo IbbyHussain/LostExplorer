@@ -175,13 +175,20 @@ public class TPS_Controller : MonoBehaviour
 
             if(HitTransform != null) 
             {
-                if(HitTransform.GetComponent<BulletTarget>() != null) 
+                TurretAI Turret;
+
+                // if hit turret AI
+                if (Turret = HitTransform.GetComponent<TurretAI>())
                 {
-                    // Hit target
+                    // play effect
                     Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
+
+                    // deal damage to turret
+                    Turret.TurretTakeDamage(25.0f);
+
                 }
 
-                else 
+                else
                 {
                     // Hit soemthing else
                     Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
