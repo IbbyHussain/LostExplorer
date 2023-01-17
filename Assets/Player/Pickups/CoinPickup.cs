@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
 {
+    public AudioSource PickupSound;
+
     PlayerCollectibles playerCollectiblesScript;
 
     private void OnTriggerEnter(Collider other)
@@ -16,10 +18,12 @@ public class CoinPickup : MonoBehaviour
         {
             // collect coin
             playerCollectiblesScript.CoinCollected();
+            PickupSound.Play(); // Play pickupSound
             gameObject.SetActive(false);
         }
     }
 
+    // Spin coin in local space
     void SpinCoin() 
     {
         transform.Rotate(0f, 40 * Time.deltaTime, 0f, Space.Self);
