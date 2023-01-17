@@ -19,4 +19,14 @@ public class CoinPickup : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    void SpinCoin() 
+    {
+        transform.Rotate(0f, 40 * Time.deltaTime, 0f, Space.Self);
+    }
+
+    private void Update()
+    {
+        SpinCoin();
+    }
 }
