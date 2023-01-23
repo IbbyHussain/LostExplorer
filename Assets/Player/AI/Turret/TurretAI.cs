@@ -44,8 +44,12 @@ public class TurretAI : MonoBehaviour
                 FireEffect.Stop();
 
                 // Play explosion effect
-                TurretExplosion.transform.position = TurretExplosionTransform.position;
-                TurretExplosion.Play();
+                if (TurretExplosion) 
+                {
+                    TurretExplosion.transform.position = TurretExplosionTransform.position;
+                    TurretExplosion.Play();
+                }
+           
 
                 // play sound
                 TurretDeath.Play();
