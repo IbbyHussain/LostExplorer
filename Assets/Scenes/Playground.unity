@@ -17006,6 +17006,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722670574}
     - target: {fileID: 1024131969, guid: 45d4f28a09dc2bf4f92f4b39a43353c2, type: 3}
+      propertyPath: TurretSight
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024131969, guid: 45d4f28a09dc2bf4f92f4b39a43353c2, type: 3}
       propertyPath: TurretExplosion
       value: 
       objectReference: {fileID: 2072655014}
