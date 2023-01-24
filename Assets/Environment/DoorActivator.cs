@@ -21,21 +21,10 @@ public class DoorActivator : MonoBehaviour
         {
             if(Turret.TurretHealth <= 0.0f) 
             {
+                // Open door by changing its transfrom
                 Door.transform.position = OpenDoorTransform.position;
             }
         }
-
-        // Activate door when player stands on pressure plate
-        else 
-        {
-
-        }
-    }
-
-
-    void Start()
-    {
-        
     }
 
     void Update()
