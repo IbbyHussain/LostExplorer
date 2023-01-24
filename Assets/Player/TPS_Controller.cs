@@ -188,6 +188,12 @@ public class TPS_Controller : MonoBehaviour
             TPC.SetRotateOnMove(true);
         }
 
+        // Manual Reload
+        //if (StarterInputs.Reload) 
+        //{
+        //    ReloadWeapon();
+        //}
+
         // Shoot 
         if (StarterInputs.Shoot) 
         {
@@ -236,28 +242,30 @@ public class TPS_Controller : MonoBehaviour
 
             else 
             {
-                // reload
-
-                // Take ammo from max ammo and put it into current ammo
-                if (MaxAmmo >= MagSize)
-                {
-                    MaxAmmo -= MagSize;
-
-                    CurrentAmmo = MagSize ;
-                }
-
-                // If there is not enough ammo in max ammo to reload a full mag
-                else
-                {
-                    CurrentAmmo = MaxAmmo ;
-                }
-
-                AmmoCount.UpdateAmmoCounterText();
-
+                ReloadWeapon();
             }
 
         }
         
+    }
+
+    void ReloadWeapon() 
+    {
+        // Take ammo from max ammo and put it into current ammo
+        if (MaxAmmo >= MagSize)
+        {
+            MaxAmmo -= MagSize;
+
+            CurrentAmmo = MagSize;
+        }
+
+        // If there is not enough ammo in max ammo to reload a full mag
+        else
+        {
+            CurrentAmmo = MaxAmmo;
+        }
+
+        AmmoCount.UpdateAmmoCounterText();
     }
 }
 
