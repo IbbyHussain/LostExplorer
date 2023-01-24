@@ -19170,6 +19170,8 @@ MonoBehaviour:
   ReloadSound: {fileID: 538864199}
   MaxAmmo: 120
   CurrentAmmo: 30
+  MagSize: 30
+  AmmoCount: {fileID: 1839493977}
   HPBarScript: {fileID: 1104175812}
   STBarScript: {fileID: 633393243}
   LVLComplete: {fileID: 817042251}

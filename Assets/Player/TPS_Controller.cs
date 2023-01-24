@@ -29,6 +29,7 @@ public class TPS_Controller : MonoBehaviour
 
     public int MaxAmmo = 120;
     public int CurrentAmmo = 30;
+    public int MagSize = 30;
 
     // Updates UI for ammo counter
     public AmmoCounter AmmoCount;
@@ -181,12 +182,15 @@ public class TPS_Controller : MonoBehaviour
             TPC.SetRotateOnMove(true);
         }
 
+        // Shoot 
         if (StarterInputs.Shoot) 
         {
+            // Only fire if have ammo in mag
             if (CurrentAmmo > 0) 
             {
                 CurrentAmmo -= 1;
 
+                // update UI
                 AmmoCount.UpdateAmmoCounterText();
 
                 // Play Fire sound
@@ -221,7 +225,22 @@ public class TPS_Controller : MonoBehaviour
             {
                 // reload
 
-                //CurrentAmmo = 
+                // Take ammo from max ammo and put it into current ammo
+                if (MaxAmmo >= MagSize)
+                {
+                    MaxAmmo -= MagSize;
+
+                    CurrentAmmo = MagSize ;
+                }
+
+                // If there is not enough ammo in max ammo to reload a full mag
+                else
+                {
+                    CurrentAmmo = MaxAmmo ;
+                }
+
+                AmmoCount.UpdateAmmoCounterText();
+
             }
 
         }
