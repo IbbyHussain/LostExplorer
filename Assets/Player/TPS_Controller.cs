@@ -34,6 +34,7 @@ public class TPS_Controller : MonoBehaviour
 
     [SerializeField] public HPBar HPBarScript;
     [SerializeField] public STBar STBarScript;
+    [SerializeField] public LevelComplete LVLComplete;
 
     public float CurrentHealth = 100;
     public float MaxHealth = 100;
