@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class TPS_Controller : MonoBehaviour
@@ -115,6 +116,11 @@ public class TPS_Controller : MonoBehaviour
                 // Death
 
                 Debug.Log("Dead");
+
+                int Activatescene = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(Activatescene, LoadSceneMode.Single);
+
+
             }
         }
     }
