@@ -27,6 +27,12 @@ public class TPS_Controller : MonoBehaviour
     public AudioSource FireSound;
     public AudioSource ReloadSound;
 
+    public int MaxAmmo = 120;
+    public int CurrentAmmo = 30;
+
+    // Updates UI for ammo counter
+    public AmmoCounter AmmoCount;
+
     private ThirdPersonController TPC;
     private StarterAssetsInputs StarterInputs;
 
@@ -177,32 +183,46 @@ public class TPS_Controller : MonoBehaviour
 
         if (StarterInputs.Shoot) 
         {
-            // Play Fire sound
-            FireSound.Play();
-
-            if(HitTransform != null) 
+            if (CurrentAmmo > 0) 
             {
-                TurretAI Turret;
+                CurrentAmmo -= 1;
 
-                // if hit turret AI
-                if (Turret = HitTransform.GetComponent<TurretAI>())
+                AmmoCount.UpdateAmmoCounterText();
+
+                // Play Fire sound
+                FireSound.Play();
+
+                if (HitTransform != null)
                 {
-                    // play effect
-                    Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
+                    TurretAI Turret;
 
-                    // deal damage to turret
-                    Turret.TurretTakeDamage(25.0f);
+                    // if hit turret AI
+                    if (Turret = HitTransform.GetComponent<TurretAI>())
+                    {
+                        // play effect
+                        Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
 
+                        // deal damage to turret
+                        Turret.TurretTakeDamage(25.0f);
+
+                    }
+
+                    else
+                    {
+                        // Hit soemthing else
+                        Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
+                    }
                 }
 
-                else
-                {
-                    // Hit soemthing else
-                    Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
-                }
+                StarterInputs.Shoot = false;
             }
 
-            StarterInputs.Shoot = false;
+            else 
+            {
+                // reload
+
+                //CurrentAmmo = 
+            }
 
         }
         
