@@ -19171,6 +19171,7 @@ MonoBehaviour:
   MaxAmmo: 120
   CurrentAmmo: 30
   MagSize: 30
+  FireRate: 0.5
   AmmoCount: {fileID: 1839493977}
   HPBarScript: {fileID: 1104175812}
   STBarScript: {fileID: 633393243}

@@ -31,6 +31,12 @@ public class TPS_Controller : MonoBehaviour
     public int CurrentAmmo = 30;
     public int MagSize = 30;
 
+    // Tme between each shot
+    public float FireRate = 0.25f;
+
+    // The time of the last shot
+    private float LastshootTime = 0;
+
     // Updates UI for ammo counter
     public AmmoCounter AmmoCount;
 
@@ -188,37 +194,44 @@ public class TPS_Controller : MonoBehaviour
             // Only fire if have ammo in mag
             if (CurrentAmmo > 0) 
             {
-                CurrentAmmo -= 1;
-
-                // update UI
-                AmmoCount.UpdateAmmoCounterText();
-
-                // Play Fire sound
-                FireSound.Play();
-
-                if (HitTransform != null)
+                // If enough time has passed can fire the next shot - stops spamming of shots
+                if(Time.time > LastshootTime + FireRate) 
                 {
-                    TurretAI Turret;
+                    // update LastShootTime
+                    LastshootTime = Time.time;
+                    CurrentAmmo -= 1;
 
-                    // if hit turret AI
-                    if (Turret = HitTransform.GetComponent<TurretAI>())
+                    // update UI
+                    AmmoCount.UpdateAmmoCounterText();
+
+                    // Play Fire sound
+                    FireSound.Play();
+
+                    if (HitTransform != null)
                     {
-                        // play effect
-                        Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
+                        TurretAI Turret;
 
-                        // deal damage to turret
-                        Turret.TurretTakeDamage(25.0f);
+                        // if hit turret AI
+                        if (Turret = HitTransform.GetComponent<TurretAI>())
+                        {
+                            // play effect
+                            Instantiate(VFXHitGreen, DebugTransform.position, Quaternion.identity);
 
+                            // deal damage to turret
+                            Turret.TurretTakeDamage(25.0f);
+
+                        }
+
+                        else
+                        {
+                            // Hit soemthing else
+                            Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
+                        }
                     }
 
-                    else
-                    {
-                        // Hit soemthing else
-                        Instantiate(VFXHitRed, DebugTransform.position, Quaternion.identity);
-                    }
+                    StarterInputs.Shoot = false;
                 }
 
-                StarterInputs.Shoot = false;
             }
 
             else 
@@ -247,3 +260,5 @@ public class TPS_Controller : MonoBehaviour
         
     }
 }
+
+
